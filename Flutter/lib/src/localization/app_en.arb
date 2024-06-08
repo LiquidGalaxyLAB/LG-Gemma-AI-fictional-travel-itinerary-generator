@@ -1,0 +1,6 @@
+{
+  "appTitle": "AI Touristic Information Tool",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
