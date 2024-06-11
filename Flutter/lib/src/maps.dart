@@ -9,7 +9,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
-import 'package:velocity_x/velocity_x.dart';
+// import 'package:velocity_x/velocity_x.dart';
 
 import 'data/model/itenaryModel.dart';
 
@@ -25,8 +25,9 @@ TileLayer get openStreetMapTileLayer => TileLayer(
 class MapTile extends StatefulWidget {
   static const String route = '/';
 
-   MapTile({super.key, required this.item});
-  final Places item;
+  MapTile({super.key});
+  // MapTile({super.key, required this.item});
+  // final Places item;
   @override
   State<MapTile> createState() => _MapTileState();
 }
@@ -46,12 +47,15 @@ class _MapTileState extends State<MapTile> {
             children: [
               FlutterMap(
                 options: MapOptions(
-                  initialCenter: LatLng(double.parse(widget.item.latitude!), double.parse(widget.item.longitude!)),
+                  // initialCenter: LatLng(double.parse(widget.item.latitude!), double.parse(widget.item.longitude!)),
+                  initialCenter: LatLng(double.parse("7.83"), double.parse("7.83")),
                   initialZoom: 15,
                   cameraConstraint: CameraConstraint.contain(
                     bounds: LatLngBounds(
-                       LatLng(double.parse(widget.item.latitude!), double.parse(widget.item.longitude!)),
-                       LatLng(double.parse(widget.item.latitude!), double.parse(widget.item.longitude!)),
+                      // LatLng(double.parse(widget.item.latitude!), double.parse(widget.item.longitude!)),
+                      // LatLng(double.parse(widget.item.latitude!), double.parse(widget.item.longitude!)),
+                      LatLng(double.parse("7.83"), double.parse("7.83")),
+                      LatLng(double.parse("7.83"), double.parse("7.83")),
                     ),
                   ),
                 ),
@@ -63,7 +67,8 @@ class _MapTileState extends State<MapTile> {
                       Marker(
                         width: 310,
                         height: 60,
-                        point: LatLng(double.parse(widget.item.latitude!), double.parse(widget.item.longitude!)),
+                          // point: LatLng(double.parse(widget.item.latitude!), double.parse(widget.item.longitude!)),
+                          point: LatLng(double.parse("7.83"), double.parse("7.83")),
                         child: Container(
                           height: 50,
                           width: 300,
@@ -85,7 +90,8 @@ class _MapTileState extends State<MapTile> {
                                   color: Colors.black87,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text(widget.item.name!,style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white)),),
+                                    child: Text("widget.item.name!",style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white)),),
+                                    // child: Text(widget.item.name!,style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white)),),
                                   ),
                                 )
                               ],

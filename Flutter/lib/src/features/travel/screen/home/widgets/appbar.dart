@@ -14,7 +14,7 @@ class AppBarWelcome extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Hi, Nitish!",
+            "Hi, Shiven!",
             style: GoogleFonts.poppins(textStyle: TextStyle( color: Colors.grey,
               fontWeight: FontWeight.bold,
               fontSize: 30,

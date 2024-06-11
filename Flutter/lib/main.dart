@@ -3,6 +3,7 @@ import 'package:dart_ping_ios/dart_ping_ios.dart';
 import 'package:liquid_galaxy_rig/src/app.dart';
 import 'package:liquid_galaxy_rig/src/controllers/lg_controller.dart';
 import 'package:liquid_galaxy_rig/src/controllers/ssh_controller.dart';
+import 'package:liquid_galaxy_rig/src/features/travel/screen/home/homescreen.dart';
 import 'dart:io';
 
 // import 'src/app.dart';
@@ -28,17 +29,17 @@ void main() async {
   // Run the app and pass in the SettingsController. The app listens to the
   // SettingsController for changes, then passes it further down to the
   // SettingsView.
-  runApp(MyApp(
-      settingsController: settingsController,
-      sshController: sshController,
-      lgController: lgController));
-}
-//   runApp(MaterialApp(
-//     home: Scaffold(
-//       appBar: AppBar(
-//         title: Text('Chat Completion Result'),
-//       ),
-//       body: ChatCompletionWidget(),
-//     ),
-//   ));
+//   runApp(MyApp(
+//       settingsController: settingsController,
+//       sshController: sshController,
+//       lgController: lgController));
 // }
+  runApp(MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(
+        title: Text('Chat Completion Result'),
+      ),
+      body: HomeScreen(),
+    ),
+  ));
+}

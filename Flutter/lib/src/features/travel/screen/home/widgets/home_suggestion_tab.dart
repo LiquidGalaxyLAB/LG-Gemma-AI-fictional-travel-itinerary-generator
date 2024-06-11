@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:glassmorphism_ui/glassmorphism_ui.dart';
+
 class HomeSuggestionTab extends StatelessWidget {
   const HomeSuggestionTab({super.key, required this.child});
 
