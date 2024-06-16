@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:liquid_galaxy_rig/Settings.dart';
+
+import '../../../../../controllers/settings_controller.dart';
+import '../../../../../controllers/ssh_controller.dart';
+import '../../../../../screens/settings/settings_view.dart';
+import '../../../../../screens/splash/splash_screen.dart';
 class AppBarWelcome extends StatelessWidget {
   const AppBarWelcome({
     super.key,
+    required this.controller, required this.sshController
   });
+
+  final SettingsController controller;
+  final SshController sshController;
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +33,15 @@ class AppBarWelcome extends StatelessWidget {
               wordSpacing: 0.0,),
             ),
           ),
-          Icon(
+          IconButton(onPressed: (){
+             Navigator.push(context, MaterialPageRoute(builder:(context)=> SettingsView(controller: controller ,sshController: sshController ,)
+                   ));
+          },icon:  Icon(
             Iconsax.profile_circle5,
             color: Colors.grey,
             size: 30,
-          )
+          ),),
+
         ],
       ),
     );

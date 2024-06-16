@@ -12,6 +12,16 @@ from langchain.output_parsers import PydanticOutputParser
 from langchain_core.output_parsers import JsonOutputParser
 from flask import request, jsonify
 import time
+import requests
+from dotenv import load_dotenv
+import os
+load_dotenv()
+PEXELS_API_KEY = os.getenv('PEXELS_API_KEY')
+
+url = "https://api.pexels.com/v1/search"
+headers = {
+    "Authorization": PEXELS_API_KEY
+}
 
 
 
@@ -26,7 +36,7 @@ def query():
 
     queryDays = int(request.form['queryDays'])
     print(queryPlace, queryDays, "request received")
-    prompt = f"You are an expert travel planner. Generate a fictional traveler's log in the form of a list of travel destinations for a trip to {queryPlace}, with a total of {str(queryDays * 2)} places.you can include clubs, bars, forts, restaurants, hidden gems, also some other famous places like museums etc, . Each destination should include the following details: name, description, locationName, longitude, latitude, attraction, totalTravelTimeInHours, visitTime, estimatedFoodCost, dailyLog, estimatedTravelCost, estimatedStayCost, and childrenAllowed. The response should be in UTF-8 JSON format, all places enclosed in the 'places' field of the JSON to be returned without any extra comments or quote wrappers."
+    prompt = f"You are an expert travel planner. Generate a fictional traveler's log in the form of a list of travel destinations for a trip to {queryPlace}, with a total of {str(queryDays * 2)} places.you can include clubs, bars, forts, restaurants, hidden gems, also some other famous places like museums etc, . Each destination should include the following details: name, description, locationName, longitude, latitude, attraction, totalTravelTimeInHours, VisitTime, estimatedFoodCost, dailyLog, estimatedTravelCost, estimatedStayCost, and childrenAllowed. The response should be in UTF-8 JSON format, all places enclosed in the 'places' field of the JSON to be returned without any extra comments or quote wrappers."
     print(prompt, "this is the prompt")
     planet_parser = PydanticOutputParser(pydantic_object=Data)
     output = llm.invoke(prompt)
@@ -67,12 +77,29 @@ def query():
             elif totalPlaces < 0:
                 break
         parseroutput.dayWiseItinerary = dataplaces
-        parseroutput.experience = experiences
+        parseroutput.experiences = experiences
         # print("json_conversion", parseroutput.json())
-
+        try: 
+            for i in range(len(parseroutput.places)):
+                # print("corr1")
+                params = {
+                "query": parseroutput.places[i].name,
+                "per_page": 1
+                }
+                # print("corr")
+                response = requests.get(url, headers=headers, params=params)
+                # print(response)
+                try: 
+                    if response.status_code == 200:
+                        parseroutput.places[i].image_link = response.json()['photos'][0]['src']['large']
+                except: 
+                    print("image error",  parseroutput.places[i].name)
+        except:
+            print("image getting error")
         json_data = json.loads(parseroutput.json())
-
+        print("generated response", json_data)
         return {"status": "success", "data": json_data}
     except:
+        print("error response")
         return {"status": "success", "data": responsewithloc}
 

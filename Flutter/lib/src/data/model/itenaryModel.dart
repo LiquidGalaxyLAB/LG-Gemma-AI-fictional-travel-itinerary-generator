@@ -40,6 +40,8 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     if (json['places'] != null) {
       places = <Places>[];
+      print(json);
+      print(json['places']!.length);
       json['places'].forEach((v) {
         places!.add(new Places.fromJson(v));
       });
@@ -82,6 +84,7 @@ class Data {
 class Places {
   String? name;
   String? location;
+  String? dailyLog;
   String? imageLink;
   String? description;
   String? attraction;
@@ -95,6 +98,7 @@ class Places {
         this.location,
         this.imageLink,
         this.description,
+        this.dailyLog,
         this.attraction,
         this.visitTime,
         this.childrenAllowed,
@@ -108,6 +112,7 @@ class Places {
     latitude = json['latitude'];
     longitude = json['longitude'];
     imageLink = json['image_link'];
+    dailyLog = json['dailyLog'];
     description = json['description'];
     attraction = json['attraction'];
     visitTime = json['VisitTime'];
@@ -121,6 +126,7 @@ class Places {
     data['image_link'] = this.imageLink;
     data['latitude'] = this.latitude;
     data['longitude'] = this.longitude;
+    data['dailyLog'] = this.dailyLog;
     data['description'] = this.description;
     data['attraction'] = this.attraction;
     data['VisitTime'] = this.visitTime;

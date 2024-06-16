@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:liquid_galaxy_rig/src/features/travel/screen/final/finalScreen.dart';
 
 import 'home_suggestion_tab.dart';
 class Suggestions extends StatelessWidget {
@@ -17,9 +18,15 @@ class Suggestions extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: [
           HomeSuggestionTab(
-            child: Icon(
-              Iconsax.search_normal,
-              color: Colors.white,
+            child: IconButton(
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder:(context)=> Finalscreen(query: "Delhi", days: 2)
+                ));
+              },
+              icon: Icon(
+                Iconsax.search_normal,
+                color: Colors.white,
+              ),
             ),
           ),
           SizedBox(

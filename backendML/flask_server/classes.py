@@ -12,17 +12,19 @@ class Places(BaseModel):
     # 2. Each field has a `description` -- this description is used by the LLM.
     # Having a good description can help improve extraction results.
     name: Optional[str] = Field(default=None, description="The name of the place")
+    image_link: Optional[str] = Field(default="https://images.pexels.com/photos/574313/pexels-photo-574313.jpeg?auto=compress&cs=tinysrgb&h=650&w=940", description="Image of the place")
+
     locationName: Optional[str] = Field(
         default="Location, Location", description="location of the place"
     )
-    latitude: Optional[float] = Field(
-        default=20.5937, description="latitude of the place"
+    latitude: Optional[str] = Field(
+        default='20.5937', description="latitude of the place"
     )
     totalTravelTimeInHours: Optional[float] = Field(
         default=1, description="Total Travel Time"
     )
-    longitude: Optional[float] = Field(
-        default=78.9629, description="longitude of the place"
+    longitude: Optional[str] = Field(
+        default='78.9629', description="longitude of the place"
     )
     dailyLog: Optional[str] = Field(
         default="I looked around at that place", description="dailyLog of the place"
@@ -39,10 +41,10 @@ class Places(BaseModel):
     description: Optional[str] = Field(
         default="the place is one of the famous places", description="description of the place"
     )
-    childrenAllowed: Optional[bool] = Field(
-        default=False, description="children allowed or not"
+    childrenAllowed: Optional[str] = Field(
+        default="False", description="children allowed or not"
     )
-    visitTime: Optional[str] = Field(
+    VisitTime: Optional[str] = Field(
         default="10:00 to 19:00", description="visitation time in 24 hour format"
     )
     attraction: Optional[str] = Field(
@@ -54,6 +56,7 @@ class Places(BaseModel):
         print("name: ", self.name)
         print("locationName: ", self.locationName)
         print("longitude: ", self.longitude)
+        print("img link: ", self.image_link)
         print("latitude: ", self.latitude)
         print("visit Time: ", self.visitTime)
         print("dailyLog: ", self.dailyLog)
@@ -76,7 +79,7 @@ class Data(BaseModel):
     hotels: Optional[List[str]] = Field(
         default=[], description="Hotels"
     )
-    experience: Optional[List[str]] = Field(
+    experiences: Optional[List[str]] = Field(
         default=[], description="Experiences"
     )
     transport: Optional[List[str]] = Field(

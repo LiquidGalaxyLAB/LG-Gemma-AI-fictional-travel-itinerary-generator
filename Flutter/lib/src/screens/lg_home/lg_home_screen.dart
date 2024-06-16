@@ -216,7 +216,7 @@ class LgHome extends StatelessWidget {
                         try {
                           Data itenary = Data();
                           ItenaryRepo repo = ItenaryRepo();
-                          itenary = await repo.FetchIten("Spain", '4');
+                          itenary = await repo.FetchIten("Spain", 4);
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

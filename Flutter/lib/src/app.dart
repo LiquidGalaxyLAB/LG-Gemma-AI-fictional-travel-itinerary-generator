@@ -7,6 +7,7 @@ import 'package:liquid_galaxy_rig/src/screens/lg_home/lg_home_screen.dart';
 import 'package:liquid_galaxy_rig/src/screens/splash/splash_screen.dart';
 
 import 'controllers/settings_controller.dart';
+import 'features/travel/screen/home/homescreen.dart';
 import 'screens/settings/settings_view.dart';
 
 /// The Widget that configures your application.
@@ -75,19 +76,22 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute<void>(
               settings: routeSettings,
               builder: (BuildContext context) {
-                switch (routeSettings.name) {
-                  case SettingsView.routeName:
-                    return SettingsView(
-                        controller: settingsController,
-                        sshController: sshController);
-                  case LgHome.routeName:
-                  default:
-                    return SplashScreen(
-                      settings: settingsController,
-                      sshController: sshController,
-                      lgController: lgController,
-                    );
-                }
+                return HomeScreen(
+                    controller: settingsController,
+                    sshController: sshController);
+                // switch (routeSettings.name) {
+                //   case SettingsView.routeName:
+                //     return SettingsView(
+                //         controller: settingsController,
+                //         sshController: sshController);
+                //   case LgHome.routeName:
+                //   default:
+                //     return SplashScreen(
+                //       settings: settingsController,
+                //       sshController: sshController,
+                //       lgController: lgController,
+                //     );
+                // }
               },
             );
           },

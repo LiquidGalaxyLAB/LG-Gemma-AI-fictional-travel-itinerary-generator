@@ -13,10 +13,10 @@ import '../model/DayWiseModel.dart';
 class ItenaryRepo {
   final Api _api = Api();
 
-  Future<Data> FetchIten(String query, String days) async {
+  Future<Data> FetchIten(String query, int days) async {
     log("hrllo");
     var form = FormData.fromMap({'queryPlace': query, 'queryDays': days});
-    final Map<String, String> body = {'queryPlace': query, 'queryDays': days};
+    final Map<String, dynamic> body = {'queryPlace': query, 'queryDays': days};
     Response response = await _api.sendRequest.post(
       '/query',
       data: form,
@@ -24,10 +24,12 @@ class ItenaryRepo {
     log("dljkfhiosudhfiouksdhidsk");
     ApiResponse apiResponse = ApiResponse.fromResponse(response);
     log("jsdhaiksujgdjkhsagjhasgjshag");
+    log(apiResponse.data.toString() + "apiresponse");
     var item = Data.fromJson(apiResponse.data);
     log("khjsdgciusdgfiusdtyfgiusetfiudsgtfiusdgfiusdgfsdujfgsdkjhfgdsf\n\n\n\n");
     log(item.places![1].imageLink.toString() + "print hoja");
     print(item.places![1].imageLink.toString() + "print hoja");
+    print(item.places!.length.toString() + " places in total");
     return item;
   }
 

@@ -12,8 +12,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:liquid_galaxy_rig/src/maps.dart';
 
+import '../../../../controllers/settings_controller.dart';
+import '../../../../controllers/ssh_controller.dart';
+
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key,
+  required this.controller, required this.sshController
+  });
+
+  final SettingsController controller;
+  final SshController sshController;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AppBarWelcome(),
+                        AppBarWelcome(sshController: sshController,controller: controller,),
                         SizedBox(
                           height: 10,
                         ),
@@ -133,7 +141,6 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),),
-
           ],
         ),
       ),
