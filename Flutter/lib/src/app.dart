@@ -78,6 +78,7 @@ class MyApp extends StatelessWidget {
               builder: (BuildContext context) {
                 return HomeScreen(
                     controller: settingsController,
+                    lgController: lgController,
                     sshController: sshController);
                 // switch (routeSettings.name) {
                 //   case SettingsView.routeName:

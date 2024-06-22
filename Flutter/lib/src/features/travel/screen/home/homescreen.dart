@@ -1,4 +1,5 @@
 // import 'package:liquid_galaxy_rig/src/common/widgets/container/tab_glass.dart';
+import 'package:liquid_galaxy_rig/src/controllers/lg_controller.dart';
 import 'package:liquid_galaxy_rig/src/features/travel/screen/home/widgets/appbar.dart';
 import 'package:liquid_galaxy_rig/src/features/travel/screen/home/widgets/home_suggestion_tab.dart';
 import 'package:liquid_galaxy_rig/src/features/travel/screen/home/widgets/homeintro_text.dart';
@@ -11,17 +12,36 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:liquid_galaxy_rig/src/maps.dart';
+import 'package:liquid_galaxy_rig/src/maps1.dart';
 
 import '../../../../controllers/settings_controller.dart';
 import '../../../../controllers/ssh_controller.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class HomeScreen extends StatelessWidget {
+
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key,
+    required this.lgController,
   required this.controller, required this.sshController
   });
-
+  final LgController lgController;
   final SettingsController controller;
   final SshController sshController;
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  late GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +50,10 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Row(
           children: [
-            Container(width: MediaQuery.of(context).size.width * 0.6,child: MapTile()),
-            Container(width: MediaQuery.of(context).size.width * 0.4,child: Stack(
+            Container(width: MediaQuery.of(context).size.width * 0.6,
+        child:MapScreen()),
+            Container(width: MediaQuery.of(context).size.width * 0.4,
+              child: Stack(
               children: [
                 ///Earth image
                 Center(
@@ -53,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AppBarWelcome(sshController: sshController,controller: controller,),
+                        AppBarWelcome(sshController: widget.sshController,controller: widget.controller,),
                         SizedBox(
                           height: 10,
                         ),
@@ -61,7 +83,9 @@ class HomeScreen extends StatelessWidget {
                         SizedBox(
                           height: 180,
                         ),
-                        Suggestions(),
+                        Suggestions(settings: widget.controller,
+                            sshController: widget.sshController,
+                            lgController: widget.lgController),
                         SizedBox(
                           height: 10,
                         ),

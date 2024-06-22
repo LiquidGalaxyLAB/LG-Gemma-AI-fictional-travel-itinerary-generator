@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:liquid_galaxy_rig/src/controllers/settings_controller.dart';
 import 'package:liquid_galaxy_rig/src/features/travel/screen/final/finalScreen.dart';
+import 'package:liquid_galaxy_rig/src/controllers/lg_controller.dart';
+import 'package:liquid_galaxy_rig/src/controllers/ssh_controller.dart';
+import 'package:liquid_galaxy_rig/src/features/travel/screen/voice/voiceScreen.dart';
 
 import 'home_suggestion_tab.dart';
 class Suggestions extends StatelessWidget {
   const Suggestions({
     super.key,
+    required this.settings,
+    required this.sshController,
+    required this.lgController
   });
+  final SshController sshController;
+  final SettingsController settings;
+  final LgController lgController;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +30,14 @@ class Suggestions extends StatelessWidget {
           HomeSuggestionTab(
             child: IconButton(
               onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder:(context)=> Finalscreen(query: "Delhi", days: 2)
+                // Navigator.push(context, MaterialPageRoute(builder:(context)=> Finalscreen(query: "Delhi", days: 2,
+                //     settings: settings,
+                //     sshController: sshController,
+                //     lgController: lgController)
+                // ));
+                Navigator.push(context, MaterialPageRoute(builder:(context)=> new VoiceScreen(settings: settings,
+                    sshController: sshController,
+                    lgController: lgController)
                 ));
               },
               icon: Icon(

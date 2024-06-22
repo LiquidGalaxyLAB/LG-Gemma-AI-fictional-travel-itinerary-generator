@@ -18,6 +18,39 @@ class KmlHelper {
     </Document>
 </kml>
 ''';
+  static screenOverlayImageWithStory(String imageUrl, String story,double factor) =>
+      '''<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+ <name>About Data</name>
+ <Style id="about_style">
+   <BalloonStyle>
+     <textColor>ffffffff</textColor>
+     <text>
+        <h1>Delhi</h1>
+        <h1>$story</h1>
+        <img src="${imageUrl}" alt="City" width="300" height="200" />
+     </text>
+     <bgColor>ff15151a</bgColor>
+   </BalloonStyle>
+ </Style>
+ <Placemark id="ab">
+   <description>
+   </description>
+   <LookAt>
+  <longitude>77.2969273620498</longitude><latitude>28.6156170762213</latitude>
+     <heading>0</heading>
+     <tilt>0</tilt>
+     <range>200</range>
+   </LookAt>
+   <styleUrl>#about_style</styleUrl>
+   <gx:balloonVisibility>1</gx:balloonVisibility>
+   <Point>
+     <coordinates>77.2969273620498,28.6156170762213,0</coordinates>
+   </Point>
+ </Placemark>
+</Document>
+</kml>''';
   static String lookAtLinear(double latitude, double longitude, double zoom,
           double tilt, double bearing) =>
       '<LookAt><longitude>$longitude</longitude><latitude>$latitude</latitude><range>$zoom</range><tilt>$tilt</tilt><heading>$bearing</heading><gx:altitudeMode>relativeToGround</gx:altitudeMode></LookAt>';
