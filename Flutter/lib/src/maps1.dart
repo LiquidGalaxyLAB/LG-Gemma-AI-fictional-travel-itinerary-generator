@@ -19,7 +19,7 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  LatLng _center = LatLng(31.6333, 74.5823); // Initial map center in London
+  LatLng _center = LatLng(1.6333, 4.5823); // Initial map center in London
   double _zoom = 13.0; // Initial zoom level
 
   void _handleMapDrag(LatLng newPosition) {

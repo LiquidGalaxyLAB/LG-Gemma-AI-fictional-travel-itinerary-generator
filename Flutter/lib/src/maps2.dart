@@ -12,9 +12,9 @@ TileLayer get openStreetMapTileLayer => TileLayer(
 );
 
 class MapScreen2 extends StatefulWidget {
-  final latLng.LatLng initialCenter;
-  final double initialZoom;
-  final Function(LatLng) updateCenter;
+  latLng.LatLng initialCenter;
+  double initialZoom;
+  Function(LatLng) updateCenter;
 
   MapScreen2({
     required this.initialCenter,
@@ -27,44 +27,64 @@ class MapScreen2 extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen2> {
-  late LatLng _center; // Updated center based on user interaction
-  late double _zoom; // Zoom level
+  late LatLng center = widget.initialCenter; // Updated center based on user interaction
+  late double _zoom = widget.initialZoom;
+  late MapController _mapController;
+// Zoom level
   @override
   void initState() {
     super.initState();
-    _center = widget.initialCenter; // Initialize center
+    _mapController = MapController();
+    center = widget.initialCenter; // Initialize center
     _zoom = widget.initialZoom; // Initialize zoom
   }
 
+  void didUpdateWidget(covariant MapScreen2 oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Check if initialCenter has changed
+    if (widget.initialCenter != oldWidget.initialCenter) {
+      print("changed");
+      print(center.toString());
+      _mapController.move(widget.initialCenter, 18.0);
+      center = widget.initialCenter;
+      print(center.toString());
+      print('center.toString()');
+      setState(() {
+        center = widget.initialCenter; // Update center if initialCenter changes
+      });
+    }
+  }
   void _handleMapDrag(LatLng newPosition) {
+    print('old center');
+    print(center.toString());
+    center = newPosition; //
+    print('new center');
+    print(center.toString());
+
     setState(() {
-      _center = newPosition; // Update center on map drag
+      center = newPosition; // Update center on map drag
     });
   }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Open in Google Maps'),
-      ),
-      body: GestureDetector(
-        onPanUpdate: (details) {
-          var delta = details.delta;
-          var newCenter = LatLng(
-            _center.latitude - delta.dy * 0.01,
-            _center.longitude + delta.dx * 0.01,
-          );
-          _handleMapDrag(newCenter); // Update center based on drag
-        },
-        child: FlutterMap(
+    return Hero(
+      tag: "maploc",
+      child: Scaffold(
+        // appBar: AppBar(
+        //   title: Text('Open in Google Maps'),
+        // ),
+        body: FlutterMap(
+          mapController: _mapController,
           options: MapOptions(
-            initialCenter: _center, // Use updated center
+            initialCenter: center, // Use updated center
             initialZoom: _zoom, // Use initial zoom
             onPositionChanged: (MapCamera pos, bool hasGesture) {
               if (hasGesture) {
+                // latLng initialCenter=
+                center = pos.center;
+                print(pos.toString());
                 setState(() {
-                  _center = pos.center; // Update center on map gesture
+                  center = pos.center; // Update center on map gesture
                 });
               }
             },

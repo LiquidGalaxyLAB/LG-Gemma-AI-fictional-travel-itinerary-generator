@@ -19,38 +19,34 @@ class KmlHelper {
 </kml>
 ''';
   static screenOverlayImageWithStory(String imageUrl, String story,double factor) =>
-      '''<?xml version="1.0" encoding="UTF-8"?>
-<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
-<Document>
- <name>About Data</name>
- <Style id="about_style">
-   <BalloonStyle>
-     <textColor>ffffffff</textColor>
-     <text>
-        <h1>Delhi</h1>
-        <h1>$story</h1>
-        <img src="${imageUrl}" alt="City" width="300" height="200" />
-     </text>
-     <bgColor>ff15151a</bgColor>
-   </BalloonStyle>
- </Style>
- <Placemark id="ab">
-   <description>
-   </description>
-   <LookAt>
-  <longitude>77.2969273620498</longitude><latitude>28.6156170762213</latitude>
-     <heading>0</heading>
-     <tilt>0</tilt>
-     <range>200</range>
-   </LookAt>
-   <styleUrl>#about_style</styleUrl>
-   <gx:balloonVisibility>1</gx:balloonVisibility>
-   <Point>
-     <coordinates>77.2969273620498,28.6156170762213,0</coordinates>
-   </Point>
- </Placemark>
-</Document>
-</kml>''';
+      '''<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2' xmlns:gx='http://www.google.com/kml/ext/2.2' xmlns:kml='http://www.opengis.net/kml/2.2' xmlns:atom='http://www.w3.org/2005/Atom'>
+    <Document id ='logo'>
+         <name>Screen overlay</name>
+             <Folder>
+                  <name>Something Else</name>
+                  <Placemark>
+    <name>Traveller's Story</name>
+    <description>
+    <![CDATA[
+    <div style='width:300px;justify-content: center;padding:5px;display:flex;flex-direction:column;'>
+    
+<img style='object-fit:cover;width:300;height:300' src="$imageUrl">
+    <div>$story</div>
+    </div>
+
+  ]]>
+    </description>
+    <gx:balloonVisibility>1</gx:balloonVisibility>
+    <Point>
+      <coordinates>22.294785,48.858093,0</coordinates>
+    </Point>
+  </Placemark>
+
+             </Folder> 
+    </Document>
+</kml>
+''';
   static String lookAtLinear(double latitude, double longitude, double zoom,
           double tilt, double bearing) =>
       '<LookAt><longitude>$longitude</longitude><latitude>$latitude</latitude><range>$zoom</range><tilt>$tilt</tilt><heading>$bearing</heading><gx:altitudeMode>relativeToGround</gx:altitudeMode></LookAt>';
