@@ -12,6 +12,7 @@ class Place {
   String location;
   String img;
   String desc;
+  String dailyLog;
   String attract;
   String visitTime;
   String ChildAllow;
@@ -21,6 +22,7 @@ class Place {
     required this.img,
     required this.desc,
     required this.attract,
+    required this.dailyLog,
     required this.visitTime,
     required this.ChildAllow,
   });
@@ -29,6 +31,7 @@ class Place {
     String? name,
     String? location,
     String? img,
+    String? dailyLog,
     String? desc,
     String? attract,
     String? visitTime,
@@ -38,6 +41,7 @@ class Place {
       name: name ?? this.name,
       location: location ?? this.location,
       img: img ?? this.img,
+      dailyLog: dailyLog ?? this.dailyLog,
       desc: desc ?? this.desc,
       attract: attract ?? this.attract,
       visitTime: visitTime ?? this.visitTime,
@@ -51,6 +55,7 @@ class Place {
       'location': location,
       'img': img,
       'desc': desc,
+      'dailyLog': dailyLog,
       'attract': attract,
       'visitTime': visitTime,
       'ChildAllow': ChildAllow,
@@ -63,6 +68,7 @@ class Place {
       location: map['location'] as String,
       img: map['img'] as String,
       desc: map['desc'] as String,
+      dailyLog: map['dailyLog'] as String,
       attract: map['attract'] as String,
       visitTime: map['visitTime'] as String,
       ChildAllow: map['ChildAllow'] as String,
@@ -75,7 +81,7 @@ class Place {
 
   @override
   String toString() {
-    return 'Place(name: $name, location: $location, img: $img, desc: $desc, attract: $attract, visitTime: $visitTime, ChildAllow: $ChildAllow)';
+    return 'Place(name: $name, dailyLog : $dailyLog,location: $location, img: $img, desc: $desc, attract: $attract, visitTime: $visitTime, ChildAllow: $ChildAllow)';
   }
 
   @override
@@ -86,6 +92,7 @@ class Place {
       other.name == name &&
           other.location == location &&
           other.img == img &&
+          other.dailyLog == dailyLog &&
           other.desc == desc &&
           other.attract == attract &&
           other.visitTime == visitTime &&
@@ -97,6 +104,7 @@ class Place {
     return name.hashCode ^
     location.hashCode ^
     img.hashCode ^
+    dailyLog.hashCode ^
     desc.hashCode ^
     attract.hashCode ^
     visitTime.hashCode ^

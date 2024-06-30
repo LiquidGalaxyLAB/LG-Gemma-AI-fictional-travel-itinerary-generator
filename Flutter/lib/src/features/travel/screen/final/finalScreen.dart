@@ -384,7 +384,7 @@ For example, when recommending a destination for swimming, consider suggesting p
                                                         );
                                                         _updateCenter(latLng.LatLng(double.parse(itenary.places![index].latitude!), double.parse(itenary.places![index].longitude!)));
                                                         setState(() {
-                                                          story = itenary.places![index].description!;
+                                                          story = itenary.places![index].dailyLog!;
                                                         });
                                                         // for (double i = 0; i <= 180; i += 17) {
                                                         //   await lgController.dispatchQuery(context,
@@ -399,7 +399,7 @@ For example, when recommending a destination for swimming, consider suggesting p
                                                             // "${itenary.places![index].imageLink}",
                                                             //   "https://www.hindustantimes.com/ht-img/img/2023/04/22/550x309/HIDIVE_OSHI_NO_KO_1682155135941_1682155148326.jpg",
                                                             image,
-                                                            "${itenary.places![index].description}",
+                                                            "${itenary.places![index].dailyLog}",
                                                             9 / 16,
                                                           ),
                                                         );
@@ -415,8 +415,10 @@ For example, when recommending a destination for swimming, consider suggesting p
                                                         () {
                                                       print(_currentCenter.toString());
                                                       print("current center");
+                                                      print("fhdkfhdkfhkd ");
+                                                      print("${itenary.places![index].dailyLog!}");
                                                       setState(() {
-                                                        story = itenary.places![index].description!;
+                                                        story = itenary.places![index].dailyLog!;
                                                       });
                                                       _updateCenter(latLng.LatLng(double.parse(
                                                           itenary.places![index].latitude!),
