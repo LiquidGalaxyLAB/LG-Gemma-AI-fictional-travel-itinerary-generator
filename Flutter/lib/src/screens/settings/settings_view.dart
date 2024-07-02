@@ -1,17 +1,20 @@
 import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_galaxy_rig/src/controllers/ssh_controller.dart';
+import 'package:liquid_galaxy_rig/src/controllers/lg_controller.dart';
+import 'package:liquid_galaxy_rig/src/screens/lg_home/lg_home_screen.dart';
 
 import '../../controllers/settings_controller.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView(
-      {super.key, required this.controller, required this.sshController});
+      {super.key, required this.controller, required this.sshController,required this.lgController});
 
   static const routeName = '/settings';
 
   final SettingsController controller;
   final SshController sshController;
+  final LgController lgController;
 
   @override
   State<SettingsView> createState() => _SettingsViewState();
@@ -221,59 +224,78 @@ class _SettingsViewState extends State<SettingsView> {
                   ],
                 ),
               ),
-              ElevatedButton(
-                child: const Text('Connect!'),
-                onPressed: () async {
-                  print('clicked');
-                  _lgConfigFormKey.currentState!.validate();
-                  if (_lgConfigFormKey.currentState!.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Connecting...')),
-                    );
-                    try {
-                      var jack = await widget.sshController.connect(
-                          _lgIpController.value.text,
-                          int.parse(_lgPortController.value.text));
-                      print(jack.toString() + "stdatus");
-                      print("e.toString()");
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                children : [
+                  ElevatedButton(
+                  child: const Text('Connect!'),
+                  onPressed: () async {
+                    print('clicked');
+                    _lgConfigFormKey.currentState!.validate();
+                    if (_lgConfigFormKey.currentState!.validate()) {
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text('Connected, authenticating...')),
+                        const SnackBar(content: Text('Connecting...')),
                       );
+                      try {
+                        var jack = await widget.sshController.connect(
+                            _lgIpController.value.text,
+                            int.parse(_lgPortController.value.text));
+                        print(jack.toString() + "stdatus");
+                        print("e.toString()");
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Connected, authenticating...')),
+                        );
 
-                      if (widget.sshController.connection != null) {
-                        try {
-                          await widget.sshController.authenticate(
-                              _lgUsernameController.value.text,
-                              _lgPasswordController.value.text);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('Authenticated, connected!')),
-                          );
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                  'Failed to authenticate! Check username, password!'),
-                            ),
-                          );
+                        if (widget.sshController.connection != null) {
+                          try {
+                            await widget.sshController.authenticate(
+                                _lgUsernameController.value.text,
+                                _lgPasswordController.value.text);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Authenticated, connected!')),
+                            );
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Failed to authenticate! Check username, password!'),
+                              ),
+                            );
+                          }
                         }
+                      } catch (e) {
+                        print(e.toString());
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content:
+                            Text('Failed to connect, recheck IP and port!}'),
+                          ),
+                        );
                       }
-                    } catch (e) {
-                      print(e.toString());
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content:
-                              Text('Failed to connect, recheck IP and port!}'),
-                        ),
-                      );
+                      _lgConfigFormKey.currentState!.save();
                     }
-                    _lgConfigFormKey.currentState!.save();
-                  }
-                },
-              ),
+                  },
+                ),
+                  SizedBox(width: 15,),
+                  ElevatedButton(onPressed: (){
+                    // Navigator.push(context, MaterialPageRoute(builder:(context)=> Finalscreen(query: "Delhi", days: 2,
+                    //     settings: settings,
+                    //     sshController: sshController,
+                    //     lgController: lgController)
+                    // ));
+                    Navigator.push(context, MaterialPageRoute(builder:(context)=> new LgHome(
+                        settings: widget.controller,
+                        sshController: widget.sshController,
+                        lgController: widget.lgController)
+                    ));
+                  }, child: const Text('Lg Actions'))
+                ]
+              )
             ],
           ),
         ),

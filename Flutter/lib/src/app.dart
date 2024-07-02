@@ -76,8 +76,8 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute<void>(
               settings: routeSettings,
               builder: (BuildContext context) {
-                return HomeScreen(
-                    controller: settingsController,
+                return SplashScreen(
+                    settings: settingsController,
                     lgController: lgController,
                     sshController: sshController);
                 // switch (routeSettings.name) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:liquid_galaxy_rig/src/controllers/lg_controller.dart';
 import 'package:liquid_galaxy_rig/src/controllers/ssh_controller.dart';
+import 'package:liquid_galaxy_rig/src/features/travel/screen/home/homescreen.dart';
 import 'package:liquid_galaxy_rig/src/screens/lg_home/lg_home_screen.dart';
 import 'package:liquid_galaxy_rig/src/controllers/settings_controller.dart';
 
@@ -28,8 +29,8 @@ class _SplashScreenState extends State<SplashScreen>
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => LgHome(
-            settings: widget.settings,
+          builder: (context) => HomeScreen(
+            controller: widget.settings,
             sshController: widget.sshController,
             lgController: widget.lgController,
           ),
@@ -52,11 +53,7 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blue, Colors.purple],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          color: Colors.black
         ),
         child: const Center(
           child: SizedBox(

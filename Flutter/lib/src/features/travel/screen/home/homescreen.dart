@@ -1,5 +1,7 @@
 // import 'package:liquid_galaxy_rig/src/common/widgets/container/tab_glass.dart';
 import 'package:liquid_galaxy_rig/src/controllers/lg_controller.dart';
+import 'package:liquid_galaxy_rig/src/features/travel/screen/about/about.dart';
+import 'package:liquid_galaxy_rig/src/features/travel/screen/final/finalScreenStatic.dart';
 import 'package:liquid_galaxy_rig/src/features/travel/screen/home/widgets/appbar.dart';
 import 'package:liquid_galaxy_rig/src/features/travel/screen/home/widgets/home_suggestion_tab.dart';
 import 'package:liquid_galaxy_rig/src/features/travel/screen/home/widgets/homeintro_text.dart';
@@ -13,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:liquid_galaxy_rig/src/maps.dart';
 import 'package:liquid_galaxy_rig/src/maps1.dart';
+import 'package:liquid_galaxy_rig/src/saved/savedResponses.dart';
 
 import '../../../../controllers/settings_controller.dart';
 import '../../../../controllers/ssh_controller.dart';
@@ -51,7 +54,69 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Row(
           children: [
             Container(width: MediaQuery.of(context).size.width * 0.6,
-        child:MapScreen()),
+        child:Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            children: [
+              Row(children: [
+                ElevatedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              side: BorderSide(width: 1, color: Colors.white)
+                          )
+                      ),
+                      backgroundColor: MaterialStateProperty.all(Colors.black),
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                    ),
+                    onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder:(context)=> new AboutPage()));
+              }, child: Text("About Us"))],),
+              Row(children: [
+                InkWell(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      child: Center(child: Text("Punjab", style: GoogleFonts.bebasNeue(shadows: [Shadow(color: Colors.black, blurRadius: 2.0, offset: Offset(2.0, 2.0))], color: Colors.white, fontSize: 40,fontWeight: FontWeight.bold))),
+                      width: MediaQuery.of(context).size.width * 0.28,
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      decoration:BoxDecoration(
+                        image:   DecorationImage(fit: BoxFit.cover,image:   AssetImage('assets/images/punjab.jpg'),
+                        )
+
+                      )
+                    ),
+                  ),
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder:(context)=> FinalscreenStatic(query: '_lastWords',iten: savedResponses.punjab, days: 5, settings: widget.controller, sshController: widget.sshController, lgController: widget.lgController)));
+                  },
+                ),
+                Spacer(),
+                InkWell(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                        child: Center(child: Text("Delhi", style: GoogleFonts.bebasNeue(shadows: [Shadow(color: Colors.black, blurRadius: 2.0, offset: Offset(2.0, 2.0))], color: Colors.white, fontSize: 40,fontWeight: FontWeight.bold))),
+
+                        width: MediaQuery.of(context).size.width * 0.28,
+                        height: MediaQuery.of(context).size.height * 0.85,
+                        decoration:BoxDecoration(
+                            image:   DecorationImage(fit: BoxFit.cover,image:   AssetImage('assets/images/delhi.jpg'),
+                            )
+
+                        )
+                    ),
+                  ),
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder:(context)=> FinalscreenStatic(query: '_lastWords',iten: savedResponses.delhi, days: 5, settings: widget.controller, sshController: widget.sshController, lgController: widget.lgController)));
+                  },
+                ),
+              ]),
+
+            ],
+          ),
+        )),
             Container(width: MediaQuery.of(context).size.width * 0.4,
               child: Stack(
               children: [
@@ -75,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AppBarWelcome(sshController: widget.sshController,controller: widget.controller,),
+                        AppBarWelcome(sshController: widget.sshController,lgController: widget.lgController, controller: widget.controller,),
                         SizedBox(
                           height: 10,
                         ),

@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
     <application
-        android:label="liquid_galaxy_rig"
+        android:label="Lg AI Fictional Itinerary Gemma"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

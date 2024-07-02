@@ -16,28 +16,34 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:liquid_galaxy_rig/src/maps.dart';
 import 'package:liquid_galaxy_rig/src/maps2.dart';
+import 'package:liquid_galaxy_rig/src/saved/savedResponses.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:liquid_galaxy_rig/src/controllers/lg_controller.dart';
 import 'package:liquid_galaxy_rig/src/controllers/ssh_controller.dart';
 import 'package:liquid_galaxy_rig/src/helpers/kml_helper.dart';
 import 'package:liquid_galaxy_rig/src/constants/values.dart';
 import 'package:latlong2/latlong.dart' as latLng;
+import "dart:convert";
 
-class Finalscreen extends StatefulWidget {
-  Finalscreen({super.key, required this.query, required this.days,
+class FinalscreenStatic extends StatefulWidget {
+  FinalscreenStatic({super.key,
+    required this.query,
+    required this.days,
+    required this.iten,
     required this.settings,
     required this.sshController,
     required this.lgController});
   final SshController sshController;
   final SettingsController settings;
   final LgController lgController;
+  String iten;
    String query;
   final int days;
   @override
-  State<Finalscreen> createState() => _FinalscreenState();
+  State<FinalscreenStatic> createState() => _FinalscreenStaticState();
 }
 
-class _FinalscreenState extends State<Finalscreen> {
+class _FinalscreenStaticState extends State<FinalscreenStatic> {
   Data itenary = Data();
   bool _isDataLoaded = false;
   String story = 'Traveller Story';
@@ -76,7 +82,13 @@ For example, when recommending a destination for swimming, consider suggesting p
  Future req() async {
    ItenaryRepo repo = ItenaryRepo();
    print("req is called");
-   itenary = await repo.FetchIten(widget.query, widget.days);
+   var jsonjack = json.decode(widget.iten);
+   print(jsonjack.toString());
+   var jack = Data.fromJson(jsonjack['data']);
+   // itenary = await repo.FetchIten(widget.query, widget.days);
+   itenary = jack;
+   print(jack.toString());
+   print("jfkdfjkdjfd");
    setState(() {
      _isDataLoaded = true;
    });
@@ -92,6 +104,8 @@ For example, when recommending a destination for swimming, consider suggesting p
         child: Row(
           children: [
             Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Flexible(
                 child: Container(

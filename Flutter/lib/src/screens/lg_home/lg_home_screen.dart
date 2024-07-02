@@ -28,12 +28,12 @@ class LgHome extends StatelessWidget {
       appBar: AppBar(
         title: const Text("LG Fictional Traveller Tool"),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              Navigator.restorablePushNamed(context, SettingsView.routeName);
-            },
-          ),
+          // IconButton(
+          //   icon: const Icon(Icons.settings),
+          //   onPressed: () {
+          //     Navigator.restorablePushNamed(context, SettingsView.routeName);
+          //   },
+          // ),
         ],
       ),
       body: SafeArea(
@@ -104,55 +104,55 @@ class LgHome extends StatelessWidget {
                     : null,
                 child: const Text("Restart Liquid Galaxy"),
               ),
-              ElevatedButton(
-                onPressed: (sshController.client != null)
-                    ? () async {
-                        try {
-                          await lgController.dispatchQuery(
-                            context,
-                            'flytoview=${KmlHelper.lookAtLinear(30.733366, 76.779768, ConstantValues.tourZoomScale * 50, 0, 0)}',
-                          );
-                          for (double i = 0; i <= 180; i += 17) {
-                            await lgController.dispatchQuery(context,
-                                'flytoview=${KmlHelper.orbitLookAtLinear(30.733366, 76.779768, ConstantValues.tourZoomScale * 50, 0, i)}');
-                            await Future.delayed(
-                                const Duration(milliseconds: 1000));
-                          }
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Failed to dispatch KML query'),
-                            ),
-                          );
-                        }
-                      }
-                    : null,
-                child: const Text("Show Dev (Shivenn) Location"),
-              ),
-              ElevatedButton(
-                onPressed: (sshController.client != null)
-                    ? () async {
-                        print(settings.lgRigsNum);
-                        try {
-                          await lgController.dispatchSlaveKml(
-                            context,
-                            int.parse(settings.lgRigsNum!) - 1,
-                            KmlHelper.screenOverlayImage(
-                              "https://www.hindustantimes.com/ht-img/img/2023/04/22/550x309/HIDIVE_OSHI_NO_KO_1682155135941_1682155148326.jpg",
-                              9 / 16,
-                            ),
-                          );
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Failed to dispatch KML query'),
-                            ),
-                          );
-                        }
-                      }
-                    : null,
-                child: const Text("Show Dev Bubble"),
-              ),
+              // ElevatedButton(
+              //   onPressed: (sshController.client != null)
+              //       ? () async {
+              //           try {
+              //             await lgController.dispatchQuery(
+              //               context,
+              //               'flytoview=${KmlHelper.lookAtLinear(30.733366, 76.779768, ConstantValues.tourZoomScale * 50, 0, 0)}',
+              //             );
+              //             for (double i = 0; i <= 180; i += 17) {
+              //               await lgController.dispatchQuery(context,
+              //                   'flytoview=${KmlHelper.orbitLookAtLinear(30.733366, 76.779768, ConstantValues.tourZoomScale * 50, 0, i)}');
+              //               await Future.delayed(
+              //                   const Duration(milliseconds: 1000));
+              //             }
+              //           } catch (e) {
+              //             ScaffoldMessenger.of(context).showSnackBar(
+              //               const SnackBar(
+              //                 content: Text('Failed to dispatch KML query'),
+              //               ),
+              //             );
+              //           }
+              //         }
+              //       : null,
+              //   child: const Text("Show Dev (Shiven) Location"),
+              // ),
+              // ElevatedButton(
+              //   onPressed: (sshController.client != null)
+              //       ? () async {
+              //           print(settings.lgRigsNum);
+              //           try {
+              //             await lgController.dispatchSlaveKml(
+              //               context,
+              //               int.parse(settings.lgRigsNum!) - 1,
+              //               KmlHelper.screenOverlayImage(
+              //                 "https://www.hindustantimes.com/ht-img/img/2023/04/22/550x309/HIDIVE_OSHI_NO_KO_1682155135941_1682155148326.jpg",
+              //                 9 / 16,
+              //               ),
+              //             );
+              //           } catch (e) {
+              //             ScaffoldMessenger.of(context).showSnackBar(
+              //               const SnackBar(
+              //                 content: Text('Failed to dispatch KML query'),
+              //               ),
+              //             );
+              //           }
+              //         }
+              //       : null,
+              //   child: const Text("Show Dev Bubble"),
+              // ),
               ElevatedButton(
                 onPressed: (sshController.client != null)
                     ? () {
@@ -209,31 +209,6 @@ class LgHome extends StatelessWidget {
                       }
                     : null,
                 child: const Text("Set Slave Refresh"),
-              ),
-              ElevatedButton(
-                onPressed: (1 == 1)
-                    ? () async {
-                        try {
-                          Data itenary = Data();
-                          ItenaryRepo repo = ItenaryRepo();
-                          itenary = await repo.FetchIten("Spain", 4);
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Getting Response'),
-                            ),
-                          );
-                        } catch (e) {
-                          print(e.toString());
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Failed to get Response'),
-                            ),
-                          );
-                        }
-                      }
-                    : null,
-                child: const Text("GetInfo"),
               ),
             ],
           ),
