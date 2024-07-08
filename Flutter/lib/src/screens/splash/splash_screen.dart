@@ -3,15 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:liquid_galaxy_rig/src/controllers/lg_controller.dart';
 import 'package:liquid_galaxy_rig/src/controllers/ssh_controller.dart';
 import 'package:liquid_galaxy_rig/src/features/travel/screen/home/homescreen.dart';
-import 'package:liquid_galaxy_rig/src/screens/lg_home/lg_home_screen.dart';
 import 'package:liquid_galaxy_rig/src/controllers/settings_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen(
       {super.key,
-      required this.settings,
-      required this.sshController,
-      required this.lgController});
+        required this.settings,
+        required this.sshController,
+        required this.lgController});
   final SettingsController settings;
   final SshController sshController;
   final LgController lgController;
@@ -26,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 5), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => HomeScreen(
@@ -53,14 +52,42 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          color: Colors.black
+            color: Colors.black
         ),
-        child: const Center(
-          child: SizedBox(
-            width: 200,
-            child: Image(
-              image: AssetImage('assets/images/lool.png'),
-            ),
+        child:  Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                children: [
+                  Image.asset("assets/images/lool.png",width: 200,),
+                  Image.asset("assets/images/gsoc20.png",width: 200,),
+                  Image.asset("assets/images/Android_robot.svg.png",width: 200,),
+                ],
+              ),
+              SizedBox(height: 50,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(width: 250,),
+                  Image.asset("assets/images/lgil.png",width: 200,),
+                  Image.asset("assets/images/flil.png",width: 200,),
+                  Image.asset("assets/images/lab.png",width: 200,),
+                  Image.asset("assets/images/lab2.png",width: 200,),
+                ],
+              ),
+              SizedBox(height: 50,),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children : [
+                    Image.asset("assets/images/design-58ff752d-6243-4d3a-b637-61e19edc9c9f.png",width: 200,),
+                    Image.asset("assets/images/LiquidGalaxyAI.png",width: 200,),
+                  ]
+              )
+            ],
           ),
         ),
       ),

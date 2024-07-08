@@ -52,7 +52,7 @@ class Suggestions extends StatelessWidget {
           HomeSuggestionTab(
             child: Text(
               "🏝 Beach",
-              style: GoogleFonts.poppins(textStyle: TextStyle( color: Colors.grey,
+              style: GoogleFonts.poppins(textStyle: TextStyle( color: Colors.white,
 
                 fontSize: 18,
                 height: 1,
@@ -67,7 +67,7 @@ class Suggestions extends StatelessWidget {
           HomeSuggestionTab(
             child: Text(
               "⛳️ Auxiliary",
-              style: GoogleFonts.poppins(textStyle: TextStyle( color: Colors.grey,
+              style: GoogleFonts.poppins(textStyle: TextStyle( color: Colors.white,
 
                 fontSize: 18,
                 height: 1,
@@ -82,7 +82,7 @@ class Suggestions extends StatelessWidget {
           HomeSuggestionTab(
             child: Text(
               "🏔️️ Hills",
-              style: GoogleFonts.poppins(textStyle: TextStyle( color: Colors.grey,
+              style: GoogleFonts.poppins(textStyle: TextStyle( color: Colors.white,
 
                 fontSize: 18,
                 height: 1,

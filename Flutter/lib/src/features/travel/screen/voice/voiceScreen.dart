@@ -1,4 +1,5 @@
 // import 'package:liquid_galaxy_rig/src/features/travel/screen/itenary/schedule.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -76,26 +77,29 @@ class _VoiceScreenState extends State<VoiceScreen> {
       body: Stack(
         children: [
           Center(child: Image.asset("assets/images/BHFO.gif")),
-          Column(
-            children: [
-              SizedBox(
-                height: 50,
-              ),
-              Container(
-                padding: EdgeInsets.all(16),
-                child: TextField(
-                  maxLines: 10,
-                  controller: TextEditingController(text: _lastWords),
-                  onChanged: (val){
-                    _lastWords  = val;
-                  },
-                  style: GoogleFonts.poppins(
-                    textStyle: TextStyle(fontSize: 30, color: Colors.white),
-                  ),
-                  decoration: InputDecoration(border: InputBorder.none),
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 50,
                 ),
-              ),
-            ],
+                Container(
+                  padding: EdgeInsets.all(16),
+                  child: TextField(
+                    maxLines: 10,
+                    controller: TextEditingController(text: _lastWords),
+                    onChanged: (val){
+                      _lastWords  = val;
+                    },
+                    style: GoogleFonts.poppins(
+                      textStyle: TextStyle(fontSize: 30, color: Colors.white),
+                    ),
+                    decoration: InputDecoration(border: InputBorder.none),
+                  ),
+                ),
+              ],
+            ),
           ),
           Positioned(
             bottom: 130,
@@ -124,7 +128,7 @@ class _VoiceScreenState extends State<VoiceScreen> {
               onPressed: (){
                 print("task done");
                 print(_lastWords);
-                Navigator.push(context, MaterialPageRoute(builder:(context)=> Finalscreen(query: _lastWords, days: 5, settings: widget.settings, sshController: widget.sshController, lgController: widget.lgController)));
+                Navigator.push(context, MaterialPageRoute(builder:(context)=> Finalscreen(query: _lastWords, days: 4, settings: widget.settings, sshController: widget.sshController, lgController: widget.lgController)));
               }, child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Icon(Iconsax.arrow_right4,color: Colors.white,),

@@ -20,6 +20,8 @@ import 'package:liquid_galaxy_rig/src/saved/savedResponses.dart';
 import '../../../../controllers/settings_controller.dart';
 import '../../../../controllers/ssh_controller.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:liquid_galaxy_rig/src/features/travel/screen/final/widget/infiniteDraggableSlider/coverImage.dart';
+import 'package:liquid_galaxy_rig/src/features/travel/screen/final/widget/infiniteDraggableSlider/infiniteDraggableSlider.dart';
 
 
 
@@ -39,7 +41,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   late GoogleMapController mapController;
-
+  List<Map<String, dynamic>> images = [
+    {
+      'image': 'assets/images/punjab.jpg',
+       'text' : 'Punjab',
+      'data': savedResponses.punjab
+    },
+    {
+      'image': 'assets/images/delhi.jpg',
+      'text' : 'Delhi',
+      'data': savedResponses.delhi
+    },
+  ];
   final LatLng _center = const LatLng(45.521563, -122.677433);
 
   void _onMapCreated(GoogleMapController controller) {
@@ -49,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       backgroundColor: Colors.black,
       body: SafeArea(
         child: Row(
@@ -89,20 +103,49 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder:(context)=> FinalscreenStatic(query: '_lastWords',iten: savedResponses.punjab, days: 5, settings: widget.controller, sshController: widget.sshController, lgController: widget.lgController)));
+                    Navigator.push(context, MaterialPageRoute(builder:(context)=> FinalscreenStatic(query: '_lastWords',iten: savedResponses.punjab, days: 6, settings: widget.controller, sshController: widget.sshController, lgController: widget.lgController)));
                   },
                 ),
+                // SizedBox(
+                //   height: MediaQuery
+                //       .of(context)
+                //       .size
+                //       .height * 0.8,
+                //   child: InfiniteDragableSlider(
+                //     iteamCount: 2,
+                //     itemBuilder: (context, index) =>
+                //         InkWell(
+                //           child: ClipRRect(
+                //             borderRadius: BorderRadius.circular(20),
+                //             child: Container(
+                //                 child: Center(child: Text(images[index]['text'], style: GoogleFonts.bebasNeue(shadows: [Shadow(color: Colors.black, blurRadius: 2.0, offset: Offset(2.0, 2.0))], color: Colors.white, fontSize: 40,fontWeight: FontWeight.bold))),
+                //                 width: MediaQuery.of(context).size.width * 0.28,
+                //                 height: MediaQuery.of(context).size.height * 0.8,
+                //                 decoration:BoxDecoration(
+                //                     image:   DecorationImage(fit: BoxFit.cover,image:   AssetImage(images[index]['image']),
+                //                     )
+                //
+                //                 )
+                //             ),
+                //           ),
+                //           onTap: (){
+                //             Navigator.push(context, MaterialPageRoute(builder:(context)=> FinalscreenStatic(query: '_lastWords',iten: images[index]['data'], days: 6, settings: widget.controller, sshController: widget.sshController, lgController: widget.lgController)));
+                //           },
+                //         ),
+                //   ),
+                // ),
                 Spacer(),
                 InkWell(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Container(
-                        child: Center(child: Text("Delhi", style: GoogleFonts.bebasNeue(shadows: [Shadow(color: Colors.black, blurRadius: 2.0, offset: Offset(2.0, 2.0))], color: Colors.white, fontSize: 40,fontWeight: FontWeight.bold))),
+                        child: Center(child: Text("Delhi", style: GoogleFonts.bebasNeue(
+                            shadows: [Shadow(color: Colors.black, blurRadius: 4.0, offset: Offset(2.0, 2.0))], color: Colors.white, fontSize: 40,fontWeight: FontWeight.bold))),
 
                         width: MediaQuery.of(context).size.width * 0.28,
                         height: MediaQuery.of(context).size.height * 0.85,
                         decoration:BoxDecoration(
-                            image:   DecorationImage(fit: BoxFit.cover,image:   AssetImage('assets/images/delhi.jpg'),
+                            image:   DecorationImage(fit: BoxFit.cover,image:   AssetImage('assets/images/delhi2.jpeg'),
                             )
 
                         )
@@ -120,6 +163,20 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(width: MediaQuery.of(context).size.width * 0.4,
               child: Stack(
               children: [
+                Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.height * 1,
+                      child: Transform.scale(
+                          scale: 2.0,
+                          child: Image.asset(
+                            "assets/images/sky12.jpg",
+                          )),
+                    ),
+                  ),
+                ),
                 ///Earth image
                 Center(
                   child: Padding(
@@ -146,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         HomeIntroText(),
                         SizedBox(
-                          height: 180,
+                          height: 150,
                         ),
                         Suggestions(settings: widget.controller,
                             sshController: widget.sshController,
@@ -177,6 +234,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Flexible(
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Flexible(
                                       child: ClipRRect(

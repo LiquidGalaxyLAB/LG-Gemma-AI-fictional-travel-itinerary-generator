@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 2.0.0+2
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
@@ -38,9 +38,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   dartssh2_cli: ^1.0.0
   iconsax: ^0.0.8
+  shared_preferences: ^2.2.3
   google_fonts: ^6.2.1
   ssh2: ^2.2.3
-  path_provider: ^2.1.2
+  path_provider: ^2.0.15
   glass_kit: ^3.0.0
   glassmorphism_ui: ^0.3.0
   get: ^4.6.6
@@ -54,6 +55,7 @@ dependencies:
   dio: ^5.4.3+1
   pretty_dio_logger: ^1.3.1
   google_maps_flutter: ^2.2.8
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -61,7 +63,11 @@ dev_dependencies:
   flutter_map:
   latlong2:
   url_launcher: ^6.2.4
-
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/LiquidGalaxyAI.png"
+  min_sdk_android: 21
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

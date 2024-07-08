@@ -11,8 +11,8 @@ class HomeSuggestionTab extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(50),
       child: GlassContainer(
-
-        opacity: 0.3,
+color: Color.fromRGBO(0, 0, 0, 0.4),
+        opacity: 0.4,
         child: Center(
             child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),

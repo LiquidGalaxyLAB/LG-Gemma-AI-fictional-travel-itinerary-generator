@@ -9,6 +9,7 @@ import 'dart:io';
 // import 'src/app.dart';
 import 'src/controllers/settings_controller.dart';
 import 'src/services/settings_service.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   // Set up the SettingsController, which will glue user settings to multiple
@@ -29,10 +30,15 @@ void main() async {
   // Run the app and pass in the SettingsController. The app listens to the
   // SettingsController for changes, then passes it further down to the
   // SettingsView.
-  runApp(MyApp(
-      settingsController: settingsController,
-      sshController: sshController,
-      lgController: lgController));
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft])
+      .then((value) =>
+      runApp(MyApp(
+          settingsController: settingsController,
+          sshController: sshController,
+          lgController: lgController))
+  );
 }
 //   runApp(MaterialApp(
 //     home: Scaffold(

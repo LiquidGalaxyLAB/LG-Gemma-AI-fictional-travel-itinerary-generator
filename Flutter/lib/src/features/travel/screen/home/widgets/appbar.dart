@@ -37,7 +37,7 @@ class AppBarWelcome extends StatelessWidget {
              Navigator.push(context, MaterialPageRoute(builder:(context)=> SettingsView(lgController: lgController, controller: controller ,sshController: sshController ,)
                    ));
           },icon:  Icon(
-            Iconsax.profile_circle5,
+            Icons.settings,
             color: Colors.grey,
             size: 30,
           ),),

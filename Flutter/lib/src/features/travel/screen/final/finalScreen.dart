@@ -379,8 +379,8 @@ For example, when recommending a destination for swimming, consider suggesting p
                                                         String image = imageRaw.split('?')[0];
                                                         await widget.lgController.dispatchQuery(
                                                             context,
-                                                            'search=${itenary.places![index].name} ${itenary.places![index].location}'
-                                                          // 'flytoview=${KmlHelper.lookAtLinear(double.parse(itenary.places![index].latitude!), double.parse(itenary.places![index].longitude!), ConstantValues.tourZoomScale * 50, 0, 0)}',
+                                                            // 'search=${itenary.places![index].name} ${itenary.places![index].location}'
+                                                          'flytoview=${KmlHelper.lookAtLinear(double.parse(itenary.places![index].latitude!), double.parse(itenary.places![index].longitude!), ConstantValues.tourZoomScale * 50, 0, 0)}',
                                                         );
                                                         _updateCenter(latLng.LatLng(double.parse(itenary.places![index].latitude!), double.parse(itenary.places![index].longitude!)));
                                                         setState(() {
@@ -400,6 +400,8 @@ For example, when recommending a destination for swimming, consider suggesting p
                                                             //   "https://www.hindustantimes.com/ht-img/img/2023/04/22/550x309/HIDIVE_OSHI_NO_KO_1682155135941_1682155148326.jpg",
                                                             image,
                                                             "${itenary.places![index].dailyLog}",
+                                                            "${itenary.places![index].longitude}",
+                                                            "${itenary.places![index].latitude}",
                                                             9 / 16,
                                                           ),
                                                         );
