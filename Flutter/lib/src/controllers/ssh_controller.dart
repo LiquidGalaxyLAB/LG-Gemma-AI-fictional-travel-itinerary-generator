@@ -93,7 +93,32 @@ class SshController extends ChangeNotifier {
       throw Exception('Client must be set');
     }
   }
-
+  runKml( String kmlName) async {
+    try {
+      await client
+          ?.run("echo '\nhttp://lg1:81/$kmlName.kml' > /var/www/html/kmls.txt");
+    } catch (error) {
+      await runKml( kmlName);
+    }
+  }
+  Future<String> query(String command) async {
+    if (_client != null) {
+      try {
+        print(command);
+        final result = await _client!.execute('echo "$command" > /tmp/query/txt');
+        return 'OK';
+      } catch (e) {
+        _client!.close();
+        _client = null;
+        _connection!.close();
+        _connection = null;
+        notifyListeners();
+        throw Exception('Failed to run command: $command, closed connection.');
+      }
+    } else {
+      throw Exception('Client must be set');
+    }
+  }
   Future<void> close() async {
     if (_client != null) {
       _client!.close();

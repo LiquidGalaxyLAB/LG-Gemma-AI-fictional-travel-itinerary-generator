@@ -45,6 +45,8 @@ class _MapScreenState extends State<MapScreen2> {
     if (widget.initialCenter != oldWidget.initialCenter) {
       print("changed");
       print(center.toString());
+      print(_zoom.toString());
+      print("zoom");
       _mapController.move(widget.initialCenter, 18.0);
       center = widget.initialCenter;
       print(center.toString());
@@ -82,7 +84,10 @@ class _MapScreenState extends State<MapScreen2> {
               if (hasGesture) {
                 // latLng initialCenter=
                 center = pos.center;
+                print("changed inside");
                 print(pos.toString());
+                print(pos.center.toString());
+                print(pos.zoom.toString());
                 setState(() {
                   center = pos.center; // Update center on map gesture
                 });

@@ -127,4 +127,31 @@ class LgController {
       );
     }
   }
+
+  Future<void> dispatchTourKml(
+      BuildContext context, int slaveNo, String kml) async {
+    String command = 'echo "$kml" > /var/www/html/Tour.kml';
+    // String runCommand = 'echo "playtour=Tour_$slaveNo" > /tmp/query.txt';
+    try {
+      // String res = await sshController.runCommand(command);
+      // String resp = await sshController.runCommand(runCommand);
+      // await sshController.runKml('Tour');
+      String queryResp = await sshController.query('playtour=Tour');
+      // print(res.toString());
+      // print(resp.toString());
+      // print(queryResp.toString());
+      // print(runCommand);
+      showSnackBar(
+        context: context,
+        message: 'Showing KML on slave',
+        color: Colors.green,
+      );
+    } catch (e) {
+      showSnackBar(
+        context: context,
+        message: e.toString(),
+        color: Colors.red,
+      );
+    }
+  }
 }

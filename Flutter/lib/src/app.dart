@@ -5,6 +5,7 @@ import 'package:liquid_galaxy_rig/src/controllers/lg_controller.dart';
 import 'package:liquid_galaxy_rig/src/controllers/ssh_controller.dart';
 import 'package:liquid_galaxy_rig/src/screens/lg_home/lg_home_screen.dart';
 import 'package:liquid_galaxy_rig/src/screens/splash/splash_screen.dart';
+import 'package:liquid_galaxy_rig/warningPage.dart';
 
 import 'controllers/settings_controller.dart';
 import 'features/travel/screen/home/homescreen.dart';

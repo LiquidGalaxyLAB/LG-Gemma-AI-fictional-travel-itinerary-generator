@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:liquid_galaxy_rig/src/controllers/settings_controller.dart';
 import 'package:liquid_galaxy_rig/src/data/Repository/itenary.dart';
@@ -177,7 +179,23 @@ For example, when recommending a destination for swimming, consider suggesting p
                                     fontSize: 30,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)),
-                          ),actions: [IconButton(onPressed: (){Get.to(TimeLine2(query: widget.query + " for ${widget.days} number of days"));}, icon: Icon(Iconsax.map,color: Colors.white,))],),
+                          ),actions: [IconButton(onPressed: (){
+
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => 
+                                Stack(
+                                  children: [
+                                    MapScreen2(
+                                          initialCenter: _currentCenter, initialZoom: 13.0,  updateCenter: _updateCenter),
+                                    Positioned(top: 10,left: 5,child: IconButton(onPressed: (){Navigator.pop(context);},icon: Icon(CupertinoIcons.back),))
+                                  ],
+                                ),
+                            
+                              ),
+                            );                        // Get.to(TimeLine2(query: widget.query + " for ${widget.days} number of days"));
+
+                            }, icon: Icon(Iconsax.map,color: Colors.white,))],),
                           // Center(
                           //     child: Text(
                           //       "Your Legend",
@@ -302,30 +320,117 @@ For example, when recommending a destination for swimming, consider suggesting p
                                   )).p(5);
                             }),
                           ),
-                          ///Places card
-                          Container(child: ElevatedButton(onPressed:
-    (widget.sshController.client != null)
-    ? () async {
-    try {
+                          //Touring Button
+                          Container(
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width,
+                            child: Text(
+                              'TOURING',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                  color: Colors.white, fontWeight: FontWeight.bold),
+                            ).p(5),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                  side: MaterialStateProperty.all<BorderSide>(
+                                    BorderSide(
+                                      color: Colors.amber, // Border color
+                                      width: 1, // Border width
+                                    ),),
+                                backgroundColor:
+                                MaterialStatePropertyAll<Color>(
+                                    Colors.white10),
+                              ),
+                              onPressed:
+                          (widget.sshController.client != null)
+                              ? () async {
+                            int PlacesTotal = itenary.places!.length;
+                            for(int index = 0; index < PlacesTotal ; index++) {
+                              try {
+                                String imageRaw = "${itenary.places![index]
+                                    .imageLink}";
+                                String image = imageRaw.split('?')[0];
+                                await widget.lgController.dispatchQuery(
+                                  context,
+                                  // 'search=${itenary.places![index].name} ${itenary.places![index].location}'
+                                  'flytoview=${KmlHelper.lookAtLinear(
+                                      double.parse(
+                                          itenary.places![index].latitude!),
+                                      double.parse(
+                                          itenary.places![index].longitude!),
+                                      ConstantValues.tourZoomScale * 50, 0,
+                                      0)}',
+                                );
+                                _updateCenter(latLng.LatLng(double.parse(
+                                    itenary.places![index].latitude!),
+                                    double.parse(
+                                        itenary.places![index].longitude!)));
+                                setState(() {
+                                  story =
+                                  '${itenary.places![index].dailyLog!} ${itenary
+                                      .places![index].description!}';
+                                });
+                                // for (double i = 0; i <= 180; i += 17) {
+                                //   await lgController.dispatchQuery(context,
+                                //       'flytoview=${KmlHelper.orbitLookAtLinear(double.parse(itenary.places![index].latitude!), double.parse(itenary.places![index].longitude!), ConstantValues.tourZoomScale * 50, 0, i)}');
+                                //   await Future.delayed(
+                                //       const Duration(milliseconds: 1000));
+                                // }
+                                int rightRig = (int.parse(
+                                    widget.settings.lgRigsNum!) / 2).floor() +
+                                    1;
 
-    await widget.lgController.dispatchSlaveKml(
-    context,
-    1,
-    KmlHelper.tourKML()
-    );
-    } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(
-    content: Text('Failed to dispatch KML query'),
-    ),
-    );
-    }
-    }
-    : () {} ,
-                              child: Text("Tour", style: TextStyle(color: Colors.white),
+                                await widget.lgController.dispatchSlaveKml(
+                                  context,
+                                  rightRig,
+                                  KmlHelper.screenOverlayImageWithStory(
+                                    // "${itenary.places![index].imageLink}",
+                                    //   "https://www.hindustantimes.com/ht-img/img/2023/04/22/550x309/HIDIVE_OSHI_NO_KO_1682155135941_1682155148326.jpg",
+                                    image,
+                                    '${itenary.places![index].dailyLog!} ${itenary.places![index].description!}',
+                                    "${itenary.places![index].longitude}",
+                                    "${itenary.places![index].latitude}",
+                                    9 / 16,
+                                  ),
+                                );
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        'Failed to dispatch KML query'),
+                                  ),
+                                );
+                              }
+                              await Future.delayed(Duration(seconds: 14));                            }
+                          }
+                              :
+                              () async {
+                            int PlacesTotal = itenary.places!.length;
+                            for(int index = 0; index < PlacesTotal ; index++) {
+                              print(_currentCenter.toString());
+                              print("current center");
+                              print("fhdkfhdkfhkd ");
+                              print("${itenary.places![index].dailyLog!}");
+                              setState(() {
+                                story = '${itenary.places![index].dailyLog!} ${itenary.places![index].description!}';
+                              });
+                              _updateCenter(latLng.LatLng(double.parse(
+                                  itenary.places![index].latitude!),
+                                  double.parse(
+                                      itenary.places![index].longitude!)));
+                              await Future.delayed(Duration(seconds: 10));                            }
+                          } ,
+                              child: Text("TAKE A TOUR", style: GoogleFonts.bebasNeue(color: Colors.white, fontSize: 40),
                               )
+
+                          ).p(10),
                           ),
-                          ),
+                          ///Places card
                           Container(
                             width: MediaQuery
                                 .of(context)
@@ -429,15 +534,16 @@ For example, when recommending a destination for swimming, consider suggesting p
                                                         //   await Future.delayed(
                                                         //       const Duration(milliseconds: 1000));
                                                         // }
+                                                        int rightRig = (int.parse(widget.settings.lgRigsNum!) / 2).floor() + 1;
 
-                                                        await widget.lgController.dispatchSlaveKml(
+                                                      await widget.lgController.dispatchSlaveKml(
                                                           context,
-                                                          int.parse(widget.settings.lgRigsNum!) - 1,
+                                                            rightRig,
                                                           KmlHelper.screenOverlayImageWithStory(
                                                             // "${itenary.places![index].imageLink}",
                                                             //   "https://www.hindustantimes.com/ht-img/img/2023/04/22/550x309/HIDIVE_OSHI_NO_KO_1682155135941_1682155148326.jpg",
                                                             image,
-                                                            "${itenary.places![index].dailyLog}",
+                                                            '${itenary.places![index].dailyLog!} ${itenary.places![index].description!}',
                                                             "${itenary.places![index].longitude}",
                                                             "${itenary.places![index].latitude}",
                                                             9 / 16,

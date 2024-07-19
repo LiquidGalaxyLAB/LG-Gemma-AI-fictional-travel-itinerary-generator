@@ -12,7 +12,7 @@ class KmlHelper {
                       <overlayXY x='0' y='1' xunits='fraction' yunits='fraction'/>
                       <screenXY x='0.025' y='0.95' xunits='fraction' yunits='fraction'/>
                       <rotationXY x='0' y='0' xunits='fraction' yunits='fraction'/>
-                      <size x='300' y='${300 * factor}' xunits='pixels' yunits='pixels'/>
+                      <size x='700' y='${700 * factor}' xunits='pixels' yunits='pixels'/>
                   </ScreenOverlay>
              </Folder>
     </Document>
@@ -49,16 +49,16 @@ class KmlHelper {
 </kml>
 ''';
   static tourKML()=>
-      '''
-<?xml version='1.0' encoding='UTF-8'?>
-      <kml xmlns='http://www.opengis.net/kml/2.2' xmlns:gx='http://www.google.com/kml/ext/2.2'>
+      '''<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'
+ xmlns:gx='http://www.google.com/kml/ext/2.2'>
 
 <Document>
-  <name>A Tour and some features</name>
+  <name>A tour and some features</name>
   <open>1</open>
 
   <gx:Tour>
-    <name>Play me!</name>
+    <name>Touring</name>
     <gx:Playlist>
 
       <gx:FlyTo>
@@ -135,7 +135,7 @@ class KmlHelper {
         <Update>
           <targetHref/>
           <Change>
-            <Placemark targetId="pin2">
+            <Placemark targetId='pin2'>
               <gx:balloonVisibility>1</gx:balloonVisibility>
             </Placemark>
           </Change>
@@ -152,7 +152,7 @@ class KmlHelper {
   <Folder>
     <name>Points and polygons</name>
 
-    <Style id="pushpin">
+    <Style id='pushpin'>
       <IconStyle>
         <Icon>
           <href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
@@ -160,7 +160,7 @@ class KmlHelper {
       </IconStyle>
     </Style>
 
-    <Placemark id="mountainpin1">
+    <Placemark id='mountainpin1'>
       <name>New Zealand's Southern Alps</name>
       <styleUrl>#pushpin</styleUrl>
       <Point>
@@ -168,7 +168,7 @@ class KmlHelper {
       </Point>
     </Placemark>
 
-    <Placemark id="pin2">
+    <Placemark id='pin2'>
       <name>The End</name>
       <description>
         Learn more at http://developers.google.com/kml/documentation
@@ -179,7 +179,7 @@ class KmlHelper {
       </Point>
     </Placemark>
 
-    <Placemark id="polygon1">
+    <Placemark id='polygon1'>
       <name>Polygon</name>
       <Polygon>
         <tessellate>1</tessellate>
@@ -199,8 +199,7 @@ class KmlHelper {
 
   </Folder>
 </Document>
-</kml>
-      '''
+</kml>'''
       ;
   static String lookAtLinear(double latitude, double longitude, double zoom,
           double tilt, double bearing) =>

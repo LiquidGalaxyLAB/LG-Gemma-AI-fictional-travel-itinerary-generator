@@ -4,6 +4,8 @@ import 'package:liquid_galaxy_rig/src/app.dart';
 import 'package:liquid_galaxy_rig/src/controllers/lg_controller.dart';
 import 'package:liquid_galaxy_rig/src/controllers/ssh_controller.dart';
 import 'package:liquid_galaxy_rig/src/features/travel/screen/home/homescreen.dart';
+import 'package:liquid_galaxy_rig/warningPref.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 
 // import 'src/app.dart';
@@ -12,6 +14,14 @@ import 'src/services/settings_service.dart';
 import 'package:flutter/services.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final SharedPreferences warningPrefs = await SharedPreferences.getInstance();
+
+  bool? isWarning = warningPrefs.getBool('isWarning');
+  // await warningPrefs.clear();
+  if(isWarning!=null)
+  Warningpref.isWarning =  isWarning;
   // Set up the SettingsController, which will glue user settings to multiple
   // Flutter Widgets.
   final settingsController = SettingsController(SettingsService());
@@ -30,7 +40,6 @@ void main() async {
   // Run the app and pass in the SettingsController. The app listens to the
   // SettingsController for changes, then passes it further down to the
   // SettingsView.
-  WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft])
       .then((value) =>
