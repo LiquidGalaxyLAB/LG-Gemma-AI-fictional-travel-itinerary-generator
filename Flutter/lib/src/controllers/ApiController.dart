@@ -6,6 +6,7 @@ import 'dart:core';
 import 'dart:developer';
 import 'package:liquid_galaxy_rig/src/data/model/itenaryModel.dart';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/api.dart';
 import '../data/model/DayWiseModel.dart';
@@ -15,8 +16,10 @@ class ItenaryRepo {
   final Api _api = Api();
 
   Future <Data> FetchIten(String query, String days) async {
-
-
+    final SharedPreferences warningPrefs =await SharedPreferences.getInstance();
+    String jack = await warningPrefs.getString('AIServer') ?? '';
+    _api.changebaseurl(jack);
+    print(jack);
     Response response = await _api.sendRequest.post(
       '/query',
       data: {'queryPlace': query, 'queryDays': days},

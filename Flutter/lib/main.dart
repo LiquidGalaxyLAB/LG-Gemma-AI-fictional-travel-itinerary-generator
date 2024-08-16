@@ -3,8 +3,8 @@ import 'package:dart_ping_ios/dart_ping_ios.dart';
 import 'package:liquid_galaxy_rig/src/app.dart';
 import 'package:liquid_galaxy_rig/src/controllers/lg_controller.dart';
 import 'package:liquid_galaxy_rig/src/controllers/ssh_controller.dart';
-import 'package:liquid_galaxy_rig/src/features/travel/screen/home/homescreen.dart';
-import 'package:liquid_galaxy_rig/warningPref.dart';
+import 'package:liquid_galaxy_rig/src/screens/home/homescreen.dart';
+import 'package:liquid_galaxy_rig/src/constants/sharedPreferences/warningPref.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 

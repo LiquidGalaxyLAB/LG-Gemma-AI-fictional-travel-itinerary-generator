@@ -12,12 +12,11 @@ class LgController {
 
   Future<void> relaunchLg(BuildContext context) async {
     try {
-      String res = await sshController.runCommand(
-        'lg-relaunch',
+      await sshController.runCommand(
+        'sshpass -p ${settingsController.lgPassword} ssh -t lg1 "echo ${settingsController.lgPassword} | sudo -S lg-relaunch',
       );
-      sshController.close();
       showSnackBar(
-          context: context, message: 'Rebooting LGs', color: Colors.green);
+          context: context, message: 'Dispatching KML Query', color: Colors.green);
     } catch (e) {
       showSnackBar(context: context, message: e.toString(), color: Colors.red);
     }
@@ -42,6 +41,54 @@ class LgController {
     }
   }
 
+  Future<void> shutdownLG(BuildContext context) async {
+    try {
+      for (var i = int.parse(settingsController.lgRigsNum!); i >= 1; i--) {
+        try {
+          await sshController.runCommand(
+              'sshpass -p ${settingsController.lgPassword} ssh -t lg$i "echo ${settingsController.lgPassword} | sudo -S poweroff"');
+        } catch (e) {
+          // ignore: avoid_print
+          print(e);
+        }
+      }
+      showSnackBar(
+          context: context, message: 'Shutting Down LGs', color: Colors.green);
+    } catch (e) {
+      showSnackBar(context: context, message: e.toString(), color: Colors.red);
+    }
+  }
+  Future<void> relaunchLG(BuildContext context) async {
+    try {
+      for (var i = int.parse(settingsController.lgRigsNum!); i >= 1; i--) {
+        try {
+          String cmd =  """RELAUNCH_CMD="\\
+if [ -f /etc/init/lxdm.conf ]; then
+  export SERVICE=lxdm
+elif [ -f /etc/init/lightdm.conf ]; then
+  export SERVICE=lightdm
+else
+  exit 1
+fi
+if  [[ \\\$(service \\\$SERVICE status) =~ 'stop' ]]; then
+  echo ${settingsController.lgPassword} | sudo -S service \\\${SERVICE} start
+else
+  echo ${settingsController.lgPassword} | sudo -S service \\\${SERVICE} restart
+fi
+" && sshpass -p ${settingsController.lgPassword} ssh -x -t lg@lg$i "\$RELAUNCH_CMD\"""";
+          await sshController.runCommand(cmd);
+        } catch (e) {
+          // ignore: avoid_print
+          print(e);
+        }
+      }
+      showSnackBar(
+          context: context, message: 'Relauching LGs', color: Colors.green);
+    } catch (e) {
+      showSnackBar(context: context, message: e.toString(), color: Colors.red);
+    }
+  }
+
   Future<void> dispatchQuery(BuildContext context, String query) async {
     try {
       String res = await sshController.runCommand(
@@ -61,7 +108,20 @@ class LgController {
       );
     }
   }
-
+  Future<void> dispatchQueryWO(BuildContext context, String query) async {
+    try {
+      String res = await sshController.runCommand(
+        "echo '$query' > /tmp/query.txt",
+      );
+      print(res);
+    } catch (e) {
+      showSnackBar(
+        context: context,
+        message: e.toString(),
+        color: Colors.red,
+      );
+    }
+  }
   Future<void> setRefresh(BuildContext context) async {
     const search = '<href>##LG_PHPIFACE##kml\\/slave_{{slave}}.kml<\\/href>';
     const replace =

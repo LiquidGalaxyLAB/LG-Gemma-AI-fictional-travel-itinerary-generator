@@ -41,7 +41,7 @@ class SshController extends ChangeNotifier {
     _password = password;
     if (_username != null && _password != null) {
       try {
-        _client = SSHClient(
+        _client = await SSHClient(
           _connection!,
           username: _username!,
           onPasswordRequest: () => _password!,
@@ -49,6 +49,7 @@ class SshController extends ChangeNotifier {
         notifyListeners();
       } catch (e) {
         _client = null;
+        print('failed auth');
         throw Exception('Failed to authenticate with $_username:$_password');
       }
     } else {

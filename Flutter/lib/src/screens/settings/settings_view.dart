@@ -1,8 +1,11 @@
 import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter/material.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:liquid_galaxy_rig/src/controllers/ssh_controller.dart';
 import 'package:liquid_galaxy_rig/src/controllers/lg_controller.dart';
+import 'package:liquid_galaxy_rig/src/helpers/kml_helper.dart';
 import 'package:liquid_galaxy_rig/src/screens/lg_home/lg_home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../controllers/settings_controller.dart';
 
@@ -25,17 +28,46 @@ class SettingsView extends StatefulWidget {
 /// When a user changes a setting, the SettingsController is updated and
 /// Widgets that listen to the SettingsController are rebuilt.
 class _SettingsViewState extends State<SettingsView> {
-  final _lgConfigFormKey = GlobalKey<FormState>();
 
+  final _lgConfigFormKey = GlobalKey<FormState>();
   final _lgIpController = TextEditingController();
+  final _serverIpController = TextEditingController();
   final _lgPortController = TextEditingController();
   final _lgUsernameController = TextEditingController();
   final _lgPasswordController = TextEditingController();
   final _lgRigsNumController = TextEditingController();
+  String lgserverip = '';
+
+  @override
+  void initState() {
+    setPrefs();
+  }
+  void setPrefs() async {
+    final SharedPreferences warningPrefs = await SharedPreferences.getInstance();
+    String jack = warningPrefs.getString('AIServer') ?? '';
+    String jack1 = warningPrefs.getString('LGip') ?? '';
+    String jack2 = warningPrefs.getString('LGport') ?? '';
+    String jack3 = warningPrefs.getString('LGuser') ?? '';
+    String jack4 = warningPrefs.getString('LGpass') ?? '';
+    String jack5 = warningPrefs.getString('LGrigs') ?? '';
+    _serverIpController.text = jack;
+    lgserverip = jack;
+    _lgIpController.text = jack1;
+    widget.controller.updateLgIp(jack1);
+     _lgPortController.text = jack2;
+    widget.controller.updateLgPort(jack2);
+     _lgUsernameController.text = jack3;
+    widget.controller.updateLgUsername(jack3);
+     _lgPasswordController.text = jack4;
+     widget.controller.updateLgPassword(jack4);
+     _lgRigsNumController.text = jack5;
+    widget.controller.updateLgRigsNum(jack5);
+  }
   @override
   Widget build(BuildContext context) {
     _lgIpController.text = widget.controller.lgIp ?? '';
     _lgPortController.text = widget.controller.lgPort ?? '';
+    _serverIpController.text = lgserverip;
     _lgUsernameController.text = widget.controller.lgUsername ?? '';
     _lgPasswordController.text = widget.controller.lgPassword ?? '';
     _lgRigsNumController.text = widget.controller.lgRigsNum ?? '';
@@ -234,8 +266,7 @@ class _SettingsViewState extends State<SettingsView> {
                     print('clicked');
                     _lgConfigFormKey.currentState!.validate();
                     if (_lgConfigFormKey.currentState!.validate()) {
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
+                      // If the form is valid, display a snackbar.
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Connecting...')),
                       );
@@ -252,13 +283,30 @@ class _SettingsViewState extends State<SettingsView> {
 
                         if (widget.sshController.connection != null) {
                           try {
-                            await widget.sshController.authenticate(
+                            var wav = await widget.sshController.authenticate(
                                 _lgUsernameController.value.text,
                                 _lgPasswordController.value.text);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text('Authenticated, connected!')),
                             );
+                            //Send logos
+    int leftRig = (int.parse(_lgRigsNumController.text) / 2).floor() + 2;
+    try {
+    await widget.lgController.dispatchSlaveKml(
+    context,
+    leftRig,
+    KmlHelper.screenOverlayImage(
+    "https://i.ibb.co/6HTVC4z/centrelogo.png",
+    770 / 1380
+    ),
+    );
+    } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+    content: Text('Failed to dispatch KML query'),
+    ),
+    );}
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -295,7 +343,73 @@ class _SettingsViewState extends State<SettingsView> {
                     ));
                   }, child: const Text('Lg Actions'))
                 ]
-              )
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  validator: (value)  {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your Gemini API key.';
+                    }
+                    return null;
+                  },
+                  controller: _serverIpController,
+
+                  onChanged: (String newLgIp) async {
+                    final SharedPreferences warningPrefs = await SharedPreferences.getInstance();
+                    String jack = await warningPrefs.getString('AIServer') ?? '';
+                    print(jack);
+                    if (newLgIp == _serverIpController.text) {
+                      await warningPrefs.setString('AIServer', newLgIp);
+                      return;
+                    } else {
+                      await warningPrefs.setString('AIServer', newLgIp);
+                      _serverIpController.text = newLgIp;
+
+                    }
+                  },
+
+                  decoration: InputDecoration(
+                    labelText: 'Gemini API Key',
+                    hintText: 'Enter the API key of Google Gemini.',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    suffixIcon: IconButton(
+                      color: Colors.blue,
+                      icon: const Icon(Icons.question_mark),
+                      onPressed: () async {
+                        final model = GenerativeModel(
+                          model: 'gemini-1.5-flash-latest',
+                          apiKey: _serverIpController.text,
+                        );
+                        final content = [Content.text("Hi")];
+                        try {
+                          print( _serverIpController.text);
+                          final response = await model.generateContent(content);
+                          final jacky = await response.text ?? '';
+                          print(jacky);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  'API Key Test was successful'),
+                            ),
+                          );
+                        }
+                        catch(e) {
+                          print(e.toString());
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  'Please check API Key'),
+                            ),
+                          );
+                        }
+    },
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

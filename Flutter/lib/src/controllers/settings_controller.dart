@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/settings_service.dart';
 
@@ -61,41 +62,66 @@ class SettingsController with ChangeNotifier {
   }
 
   Future<void> updateLgIp(String newLgIp) async {
+    final SharedPreferences warningPrefs = await SharedPreferences.getInstance();
+    String jack = await warningPrefs.getString('LGip') ?? '';
+    print(jack);
     if (newLgIp == lgIp) {
+      await warningPrefs.setString('LGip', newLgIp);
       return;
     } else {
       _lgIp = newLgIp;
+      await warningPrefs.setString('LGip', newLgIp);
     }
   }
 
   Future<void> updateLgPort(String newLgPort) async {
+    final SharedPreferences warningPrefs = await SharedPreferences.getInstance();
+    String jack = await warningPrefs.getString('LGport') ?? '';
+    print(jack);
     if (newLgPort == lgPort) {
+      await warningPrefs.setString('LGport', newLgPort);
       return;
     } else {
       _lgPort = newLgPort;
+      await warningPrefs.setString('LGport', newLgPort);
     }
   }
 
   Future<void> updateLgUsername(String newLgUsername) async {
+    final SharedPreferences warningPrefs = await SharedPreferences.getInstance();
+    String jack = await warningPrefs.getString('LGuser') ?? '';
+    print(jack);
     if (newLgUsername == lgUsername) {
+      await warningPrefs.setString('LGuser', newLgUsername);
       return;
     } else {
+      await warningPrefs.setString('LGuser', newLgUsername);
       _lgUsername = newLgUsername;
     }
   }
 
   Future<void> updateLgPassword(String newLgPassword) async {
+    final SharedPreferences warningPrefs = await SharedPreferences.getInstance();
+    String jack = await warningPrefs.getString('LGpass') ?? '';
+    print(jack);
     if (newLgPassword == lgPassword) {
+      await warningPrefs.setString('LGpass', newLgPassword);
       return;
     } else {
+      await warningPrefs.setString('LGpass', newLgPassword);
       _lgPassword = newLgPassword;
     }
   }
 
   Future<void> updateLgRigsNum(String newLgRigsNum) async {
+    final SharedPreferences warningPrefs = await SharedPreferences.getInstance();
+    String jack = await warningPrefs.getString('LGrigs') ?? '';
+    print(jack);
     if (newLgRigsNum == lgRigsNum) {
+      await warningPrefs.setString('LGrigs', newLgRigsNum);
       return;
     } else {
+      await warningPrefs.setString('LGrigs', newLgRigsNum);
       _lgRigsNum = newLgRigsNum;
     }
   }

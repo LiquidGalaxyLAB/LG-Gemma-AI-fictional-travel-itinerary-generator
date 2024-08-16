@@ -111,7 +111,7 @@ class Places {
     location = json['location'];
     latitude = json['latitude'];
     longitude = json['longitude'];
-    imageLink = json['image_link'];
+    imageLink = "";
     dailyLog = json['dailyLog'];
     description = json['description'];
     attraction = json['attraction'];

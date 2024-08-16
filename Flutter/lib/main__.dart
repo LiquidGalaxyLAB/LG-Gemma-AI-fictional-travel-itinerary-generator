@@ -10,8 +10,8 @@ import 'package:get/get.dart';
 // import 'package:liquid_galaxy_rig/LiquidG.dart';
 import 'package:liquid_galaxy_rig/src/app.dart';
 import 'package:liquid_galaxy_rig/src/screens/splash/splash_screen.dart';
-import 'LiquidG.dart';
-import 'Settings.dart';
+import 'src/screens/old/LiquidG.dart';
+import 'src/screens/old/Settings.dart';
 
 void main() {
   runApp(const MyApp());

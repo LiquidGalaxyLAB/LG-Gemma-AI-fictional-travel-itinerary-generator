@@ -7,12 +7,12 @@ class KmlHelper {
              <Folder>
                   <name>Splash Screen</name>
                   <ScreenOverlay>
-                      <name>Logo</name>
+                      <name>logo</name>
                       <Icon><href>$imageUrl</href> </Icon>
-                      <overlayXY x='0' y='1' xunits='fraction' yunits='fraction'/>
-                      <screenXY x='0.025' y='0.95' xunits='fraction' yunits='fraction'/>
+                      <overlayXY x='0.5' y='0.85' xunits='fraction' yunits='fraction'/>
+                      <screenXY x='0.5' y='0.85' xunits='fraction' yunits='fraction'/>
                       <rotationXY x='0' y='0' xunits='fraction' yunits='fraction'/>
-                      <size x='700' y='${700 * factor}' xunits='pixels' yunits='pixels'/>
+                      <size x='1000' y='${1000 * factor}' xunits='pixels' yunits='pixels'/>
                   </ScreenOverlay>
              </Folder>
     </Document>
@@ -29,11 +29,11 @@ class KmlHelper {
     <name>Traveller's Story</name>
     <description>
     <![CDATA[
-    <div style='width:300px;justify-content: center;padding:5px;display:flex;flex-direction:column;'>
+    <div style='width:600px;justify-content: center;padding:5px;display:flex;flex-direction:column;'>
     
-<img style='object-fit:cover;width:300;height:300' src="$imageUrl">
+<img style='object-fit:cover;width:600;height:600' src="$imageUrl">
 <br>
-    <div>$story</div>
+    <div style='font-size: 20'>$story</div>
     </div>
 
   ]]>
@@ -48,6 +48,36 @@ class KmlHelper {
     </Document>
 </kml>
 ''';
+
+  static screenOverlayImageWithStory2(String imageUrl, String story, String long, String lat, double factor) =>
+      '''<?xml version="1.0" encoding="UTF-8"?> 
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+  <Document> 
+    <name>historic.kml</name>
+    <ScreenOverlay>
+      <name><![CDATA[<div style="text-align: center; font-size: 20px; font-weight: bold; vertical-align: middle;">Nearby Places</div>]]></name>
+      <description><![CDATA[
+        <html>
+          <body>
+          <div style="height:300px;width:300px;background-image: url("$imageUrl");background-size: cover;">
+          </div>
+          <div>
+Hello guys it's me $story
+          </div>
+          </body>
+        </html>
+      ]]></description>
+      <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+      <screenXY x="1" y="1" xunits="fraction" yunits="fraction"/>
+      <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+      <size x="0" y="0" xunits="fraction" yunits="fraction"/>
+      <gx:balloonVisibility>1</gx:balloonVisibility>
+    </ScreenOverlay>
+  </Document>
+</kml>
+''';
+
+
   static tourKML()=>
       '''<?xml version='1.0' encoding='UTF-8'?>
 <kml xmlns='http://www.opengis.net/kml/2.2'
@@ -203,7 +233,7 @@ class KmlHelper {
       ;
   static String lookAtLinear(double latitude, double longitude, double zoom,
           double tilt, double bearing) =>
-      '<LookAt><longitude>$longitude</longitude><latitude>$latitude</latitude><range>$zoom</range><tilt>$tilt</tilt><heading>$bearing</heading><gx:altitudeMode>relativeToGround</gx:altitudeMode></LookAt>';
+      '<LookAt><longitude>$longitude</longitude><latitude>$latitude</latitude><range>$zoom</range><tilt>60</tilt><heading>$bearing</heading><gx:altitudeMode>relativeToGround</gx:altitudeMode></LookAt>';
 
   static String orbitLookAtLinear(double latitude, double longitude,
           double zoom, double tilt, double bearing) =>
